@@ -20,6 +20,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoadmin
       MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+      TZ: "Europe/Moscow"
+      MONGO_INITDB_DATABASE: sharkinfo
+    volumes:
+      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
   mongo-express:
     links:
       - mongo
