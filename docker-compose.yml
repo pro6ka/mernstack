@@ -5,30 +5,39 @@ services:
     build:
       context: ./api
       dockerfile: ./Dockerfile
+    container_name: api
     ports:
       - "8080:8080"
     volumes:
       - ./src:/home/nod/app
     restart: unless-stopped
     depends_on:
-      - db
-  mongo:
+      - mongodb
+    networks:
+      - backend
+      - frontend
+  mongodb:
     image: mongo:5
+    container_name: mongodb
     ports:
       - 27017:27017
-    restart: always
+    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoadmin
       MONGO_INITDB_ROOT_PASSWORD: mongoadmin
       TZ: "Europe/Moscow"
       MONGO_INITDB_DATABASE: sharkinfo
     volumes:
+      - ./db/data:/data/db
       - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - backend
   mongo-express:
     links:
-      - mongo
+      - mongodb
+    container_name: mongo-express
     image: mongo-express
-    restart: always
+    restart: unless-stopped
     ports:
       - 8081:8081
     environment:
@@ -37,5 +46,12 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: mongoexpress
       ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
       ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
-      ME_CONFIG_MONGODB_URL: mongodb://mongoadmin:mongoadmin@mongo:27017/?authSource=admin
+      ME_CONFIG_MONGODB_URL: mongodb://mongoadmin:mongoadmin@mongodb:27017/?authSource=admin
+    networks:
+      - backend
+volumes:
+  db:
+networks:
+  backend:
+  frontend:
 
