@@ -29,7 +29,15 @@ spec:
         - env:
             - name: MONGO_INITDB_DATABASE
             - name: MONGO_INITDB_ROOT_PASSWORD
-            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MONGO_PASSWORD
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MONGO_USERNAME
             - name: TZ
               value: Europe/Moscow
           image: mongo:5

@@ -46,9 +46,9 @@ spec:
                   name: env
             - name: MONGO_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
+                  name: app-secret
                   key: MONGO_PASSWORD
-                  name: env
             - name: MONGO_PORT
               valueFrom:
                 configMapKeyRef:
@@ -56,14 +56,18 @@ spec:
                   name: env
             - name: MONGO_USERNAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
+                  name: app-secret
                   key: MONGO_USERNAME
-                  name: env
           image: pro6ka/api
           name: api
           ports:
             - containerPort: 8080
           resources: {}
+        initContainers:
+          - name: init-db
+            image: busybox
+            command: ['sh', '-c', 'until nc -z mongodb:27017; do echo waiting for db; sleep 2; done;']
           volumeMounts:
             - mountPath: /home/node/app
               name: api-claim0
