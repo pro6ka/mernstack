@@ -1,11 +1,11 @@
 const path = require('path');
 const Shark = require('../models/sharks');
 
-exposrts.index = function (req, res) {
-    res.sendFie(path.resolve('views/sharks.html'))
+exports.index = function (req, res) {
+    res.sendFile(path.resolve('views/sharks.html'))
 };
 
-exposrts.create = function (req, res) {
+exports.create = function (req, res) {
     let newShark = new Shark(req.body);
     console.log(req.body);
     newShark.save(function (err) {
@@ -15,9 +15,9 @@ exposrts.create = function (req, res) {
             res.redirect('/sharks/getshark')
         }
     });
-}
+};
 
-exposrts.list = function (req, res) {
+exports.list = function (req, res) {
     Shark.find({}).exec(function (err, sharks) {
         if (err) {
             return res.send(500, err);
@@ -26,4 +26,4 @@ exposrts.list = function (req, res) {
             sharks: sharks
         })
     });
-}
+};
