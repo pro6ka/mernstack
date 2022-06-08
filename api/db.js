@@ -1,12 +1,5 @@
 const mongoose = require('mongoose');
 
-/*
-const MONGO_USERNAME = 'mongoadmin';
-const MONGO_PASSWORD = 'mongoadmin';
-const MONGO_HOSTNAME = 'mongodb';
-const MONGO_PORT = '27017'
-const MONGO_DB = 'sharkinfo';
-*/
 const {
     MONGO_USERNAME,
     MONGO_PASSWORD,
@@ -18,7 +11,10 @@ const {
 const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
 mongoose.connect(url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 500,
+    connectTimeoutMS: 10000,
 }).then(() => {
     console.log('Connected to the database!');
 }).catch(err => {
