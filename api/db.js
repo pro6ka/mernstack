@@ -12,8 +12,8 @@ const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${M
 
 mongoose.connect(url, {
     useNewUrlParser: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 500,
+    // reconnectTries: Number.MAX_VALUE,
+    // reconnectInterval: 500,
     connectTimeoutMS: 10000,
 }).then(() => {
     console.log('Connected to the database!');

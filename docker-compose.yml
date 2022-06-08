@@ -6,28 +6,36 @@ services:
       context: ./api
       dockerfile: ./Dockerfile
     container_name: api
+    image: pro6ka/api
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
     ports:
       - "8080:8080"
     volumes:
-      - ./src:/home/nod/app
-      - ./:/home/nod/app
-    restart: unless-stopped
+      - ./api:/home/node/app
     depends_on:
       - mongodb
     networks:
       - backend
       - frontend
+    command: ./wait-for.sh mongodb:27017 -- /home/node/app/node_modules/.bin/nodemon app.js
   mongodb:
     image: mongo:5
     container_name: mongodb
+    restart: unless-stopped
     ports:
       - 27017:27017
-    restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongoadmin
-      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASSWORD
       TZ: "Europe/Moscow"
-      MONGO_INITDB_DATABASE: sharkinfo
+      MONGO_INITDB_DATABASE: $MONGO_DB
     volumes:
       - ./db/data:/data/db
       - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
