@@ -5,7 +5,7 @@ up:
 down:
 	docker compose down
 
-restart: clear down up logs-api
+restart: clear down up ps logs-api
 
 logs-%:
 	docker compose logs $* -f

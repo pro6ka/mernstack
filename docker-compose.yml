@@ -7,7 +7,7 @@ services:
       dockerfile: ./Dockerfile
     container_name: api
     image: pro6ka/api
-    restart: unless-stopped
+    restart: always
     env_file: ./.env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
@@ -28,7 +28,7 @@ services:
   mongodb:
     image: mongo:5
     container_name: mongodb
-    restart: unless-stopped
+    restart: always
     ports:
       - 27017:27017
     environment:
@@ -46,7 +46,7 @@ services:
       - mongodb
     container_name: mongo-express
     image: mongo-express
-    restart: unless-stopped
+    restart: always
     ports:
       - 8081:8081
     environment:
