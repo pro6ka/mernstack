@@ -15,3 +15,11 @@ clear:
 
 ps:
 	docker compose ps
+
+##
+# apply-minikube:
+#     eval $(minikube docker-env)
+#
+# undo-minikube:
+#     eval $(minikube docker-env)
+##

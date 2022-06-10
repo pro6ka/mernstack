@@ -3,3 +3,4 @@ api/npm-debug.log
 db/data
 .env
 secret.yaml
+.idea
