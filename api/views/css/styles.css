@@ -10,6 +10,10 @@ h1,
 h2 {
     font-weight: bold;
 }
+
+h1 {
+    color: #f9f871;
+}
 p {
     font-size: 16px;
     color: #ffffff;

@@ -12,4 +12,4 @@ COPY --chown=node:node . /home/node/app
 RUN pwd && ls -al
 EXPOSE 8080
 # CMD ["/home/node/app/node_modules/.bin/nodemon", "app.js"]
-CMD ["node", "app.js"]
+# CMD ["node", "app.js"]

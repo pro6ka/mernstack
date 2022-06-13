@@ -1,5 +1,6 @@
 up:
 	docker compose up -d --build
+	# docker compose up -d
 	notify-send --category=im.received "api started!"
 
 down:
